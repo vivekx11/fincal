@@ -4,17 +4,20 @@ import '../utils/app_theme.dart';
 class GradientBackground extends StatelessWidget {
   final Widget child;
   final PreferredSizeWidget? appBar;
+  final bool useSafeArea;
 
   const GradientBackground({
     super.key,
     required this.child,
     this.appBar,
+    this.useSafeArea = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: appBar != null,
+      extendBody: true,
       appBar: appBar,
       body: Container(
         width: double.infinity,
@@ -22,7 +25,7 @@ class GradientBackground extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: AppTheme.backgroundGradient,
         ),
-        child: SafeArea(child: child),
+        child: useSafeArea ? SafeArea(bottom: false, child: child) : child,
       ),
     );
   }
